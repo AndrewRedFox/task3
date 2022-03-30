@@ -21,7 +21,7 @@ public class mouse {
         return mouseY;
     }
 
-    public static boolean buttonDown(int keyId) {//врнет тру если мы нажмем на клавишу
+    public static boolean buttonDown(int keyId) {
         return GLFW.glfwGetMouseButton(WindowManager.getWindow().getThisWindow(), keyId) == GLFW_PRESS;
     }
 
