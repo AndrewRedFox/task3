@@ -3,6 +3,7 @@ package renderer;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,35 +11,36 @@ import static org.lwjgl.opengl.GL46C.*;
 
 public class Loader {
 
-    private List<Integer> Vaos = new ArrayList<>();
-    private List<Integer> Vbos = new ArrayList<>();
+    private List<Integer> vaos = new ArrayList<>();
+    private List<Integer> vbos = new ArrayList<>();
 
-    public RawModel loadToVao(float[] positions) {
+    public RawModel loadToVao(float[] positions, int[] indices) {
         int vaoId = createVao();
+        bindIndicesBuffer(indices);
         storeDataInAttribute(0, positions);
         unbindVao();
-        return new RawModel(vaoId, positions.length / 3);
+        return new RawModel(vaoId, indices.length);
     }
 
     public void cleanUp() {
-        for (int vao : Vaos) {
+        for (int vao : vaos) {
             glDeleteVertexArrays(vao);
         }
-        for (int vbo : Vbos) {
+        for (int vbo : vbos) {
             glDeleteBuffers(vbo);
         }
     }
 
     private int createVao() {
         int vaoId = glGenVertexArrays();
-        Vaos.add(vaoId);
+        vaos.add(vaoId);
         glBindVertexArray(vaoId);
         return vaoId;
     }
 
     private void storeDataInAttribute(int attributeNumber, float[] data) {
         int vboId = glGenBuffers();
-        Vbos.add(vboId);
+        vbos.add(vboId);
         glBindBuffer(GL_ARRAY_BUFFER, vboId);
         FloatBuffer buffer = storeDataInFloatBuffer(data);
         glBufferData(GL_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
@@ -48,6 +50,21 @@ public class Loader {
 
     private void unbindVao() {
         glBindVertexArray(0);
+    }
+
+    private void bindIndicesBuffer(int[] indices){
+        int vboId= glGenBuffers();
+        vbos.add(vboId);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,vboId);
+        IntBuffer buffer = storeDataInIntBuffer(indices);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER,buffer,GL_STATIC_DRAW);
+    }
+
+    private IntBuffer storeDataInIntBuffer(int[] data){
+        IntBuffer buffer = BufferUtils.createIntBuffer(data.length);
+        buffer.put(data);
+        buffer.flip();
+        return buffer;
     }
 
     private FloatBuffer storeDataInFloatBuffer(float[] data) {

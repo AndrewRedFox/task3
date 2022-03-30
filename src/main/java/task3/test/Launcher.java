@@ -18,9 +18,6 @@ public class Launcher {
     Loader loader = new Loader();
     Renderer renderer = new Renderer();
 
-
-
-
     public void run() {
         init();
     }
@@ -31,21 +28,6 @@ public class Launcher {
         update();
     }
 
-    public FloatBuffer storeDataInBuffer(float[] data) {//хранит bufferFloat и возвращает buffer с данными
-        FloatBuffer buffer = MemoryUtil.memAllocFloat(data.length);
-        buffer.put(data);//суем данные
-        buffer.flip();
-        return buffer;
-    }
-
-    public IntBuffer storeDataInIntBuffer(int[] data) {//хранит bufferFloat и возвращает buffer с данными
-        IntBuffer buffer = MemoryUtil.memAllocInt(data.length);
-        buffer.put(data);//суем данные
-        buffer.flip();
-        return buffer;
-    }
-
-
     private void update() {
 
         float[] v_positions =
@@ -53,9 +35,9 @@ public class Launcher {
                         0.5f, 0.5f, 0f, -0.5f, 0.5f, 0f,//1 и 2 вершина
                         -0.5f, -0.5f, 0f, 0.5f, -0.5f, 0f//3 и 4 вершина
                 };
-        //int[] indexies = {0, 1, 2, 0, 2, 3};
+        int[] indexies = {0, 1, 2, 0, 2, 3};
 
-        RawModel model = loader.loadToVao(v_positions);
+        RawModel model = loader.loadToVao(v_positions,indexies);
 
         while (!GLFW.glfwWindowShouldClose(WindowManager.getWindow().getThisWindow())) {
             if (keyboard.keyPressed(GLFW.GLFW_KEY_A)) {
