@@ -3,13 +3,10 @@ import core.WindowManager;
 import input.keyboard;
 import input.mouse;
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.system.MemoryUtil;
 import renderer.Loader;
 import renderer.RawModel;
 import renderer.Renderer;
-
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
+import renderer.staticShader;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class Launcher {
@@ -17,6 +14,7 @@ public class Launcher {
     private WindowManager manager;
     Loader loader = new Loader();
     Renderer renderer = new Renderer();
+    //staticShader shader = new staticShader();
 
     public void run() {
         init();
@@ -42,7 +40,6 @@ public class Launcher {
         while (!GLFW.glfwWindowShouldClose(WindowManager.getWindow().getThisWindow())) {
             if (keyboard.keyPressed(GLFW.GLFW_KEY_A)) {
                 System.out.println("Клавиша А нажата");
-
             }
             if (mouse.buttonPressed(GLFW_MOUSE_BUTTON_1)) {
                 System.out.println("ЛКМ нажата");
@@ -52,18 +49,15 @@ public class Launcher {
             mouse.handleMouseInput();//обработчик нажатий мыши
 
 
-
-
-
-
-
             //пререндер
             renderer.prepare();
+            //shader.start();
             renderer.render(model);
-
+            //shader.stop();
             manager.loop();
             //rendering
         }
+        //shader.cleanUp();
         loader.cleanUp();
         glfwDestroyWindow(WindowManager.getWindow().getThisWindow());
     }
