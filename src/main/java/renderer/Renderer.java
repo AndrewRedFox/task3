@@ -1,13 +1,15 @@
 package renderer;
 
+import static org.lwjgl.opengl.GL11.glRotatef;
 import static org.lwjgl.opengl.GL46C.*;
 
 
 public class Renderer {
 
     public void prepare() {
-        glClearColor(0, 1, 0, 1);
-        glClear(GL_COLOR_BUFFER_BIT);//очищаем буфер пикселей
+        glClearColor(0.7f, 1, 0, 1);//цвет фона
+        glClear(GL_COLOR_BUFFER_BIT);//очищаем буфер пикселей(только цвет)
+        glRotatef(1,0,1,1);//вращение обьекта
     }
 
     public void render(RawModel model) {

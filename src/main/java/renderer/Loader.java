@@ -1,6 +1,7 @@
 package renderer;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.assimp.AIVector2D;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
