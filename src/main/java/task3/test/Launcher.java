@@ -31,7 +31,7 @@ public class Launcher {
         float[] v_positions =
                 {
                         0.5f, 0.5f, 0f, -0.5f, 0.5f, 0f,//1 и 2 вершина
-                        -0.5f, -0.5f, 0f, 0.5f, -0.5f, 0f//3 и 4 вершина
+                        -0.5f, -0.5f, 0f, 0.5f, -0.5f, 0f//3 и 4 вершинаd
                 };
         int[] indexies = {0, 1, 2, 0, 2, 3};
 
